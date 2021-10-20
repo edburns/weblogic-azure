@@ -10,6 +10,9 @@ on:
         description: 'Specify Git Ref if needed.'
         required: false
         default: 'refs/heads/main'
+      pushTagUpstream:
+        description: 'If non-empty, will push tag to upstream.'
+        required: false
 env:
   tagbranch: "tagbranch"
   gitToken: ${{ secrets.GIT_TOKEN }}
@@ -126,3 +129,6 @@ jobs:
           git tag ${tagname}
           git push ${authGitPath} ${tagname} -f
           git push ${authGitPath} --delete ${tagbranch} -f
+          if [[ -n ${{ github.event.inputs.pushTagUpstream }} ]]; then
+              git push upstream ${tagname}
+          fi
