@@ -18,6 +18,7 @@ env:
   gitToken: ${{ secrets.GIT_TOKEN }}
   refArmttk: d97aa57d259e2fc8562e11501b1cf902265129d9
   refJavaee: c073dee94765142158f62e5a3bee0f255dd7c3a0
+  upstreamUserName: "oracle"
   repoName: "weblogic-azure"
   userEmail: ${{ secrets.USER_EMAIL }}
   userName: ${{ secrets.USER_NAME }}
@@ -130,5 +131,6 @@ jobs:
           git push ${authGitPath} ${tagname} -f
           git push ${authGitPath} --delete ${tagbranch} -f
           if [[ -n ${{ github.event.inputs.pushTagUpstream }} ]]; then
+              git remote add upstream https://github.com/${{ env.upstreamUserName }}/${{ env.repoName }}.git
               git push upstream ${tagname}
           fi
