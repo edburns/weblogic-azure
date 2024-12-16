@@ -53,7 +53,7 @@ jobs:
         # Print the extracted value
         echo "$vm_size_list"
 
-        latest_locations=$(az account list-locations --query "[?metadata.regionType=='Physical'] .name" -o tsv)
+        latest_locations=$(az account list-locations --query "[?not_null(metadata.latitude)] .name" -o tsv)
 
         new_sizes=""
         for location in $latest_locations; do
